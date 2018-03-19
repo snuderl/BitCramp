@@ -83,6 +83,10 @@ def init_data(session):
     try:
         session.add(db.User(id=1, fiat=100, btc=0))
         session.add(db.User(id=2, btc=100, fiat=0))
+
+        # Whale
+        session.add(db.User(id=3, btc=10000, fiat=100))
+
         session.commit()
     except sqlalchemy.exc.IntegrityError:
         # data already exists. Skip

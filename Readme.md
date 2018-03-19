@@ -2,14 +2,6 @@
 
 #### Note: Since exchange is still in beta all trades are free (0 trading fee).
 
-## Instructions
-To run the project do.
-```
-docker-compose build
-docker-compose up
-```
-This should start the exchange on localhost:80.
-
 ## Design
 Design consist of three layers.
 1. matching engine is a simple implementation of order matching algorithm.
@@ -17,6 +9,15 @@ Design consist of three layers.
 and business logic (make sure users have enough balance, etc..). It also makes sure that all
 interaction with matching engine is single threaded and that all operations are transactional.
 3. HTTP Api layer for interacting with trading exchange.
+
+## Instructions
+To run the project do.
+```
+docker-compose build
+docker-compose up
+```
+
+This should start the exchange on localhost:80 populated with 3 users (ids 1, 2, 3).
 
 
 ### Api calls:
