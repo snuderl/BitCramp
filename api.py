@@ -64,6 +64,21 @@ def place_order(request):
             return {"error": "Insufficient funds."}
 
 
+def cancel_order(request):
+    with db.with_session(request.registry.Session) as session:
+        user = session.query(db.User).get(int(request.matchdict["user"]))
+
+        order_id = int(request.matchdict["order"])
+        order = session.query(db.Order).get(order_id)
+
+        assert order.user_id == user.id
+
+        exchange = request.registry.exchange
+        exchange.cancel_order(order_id)
+
+        return {"status": "deleted"}
+
+
 def init_data(session):
     try:
         session.add(db.User(id=1, fiat=100, btc=0))
@@ -98,6 +113,9 @@ if __name__ == '__main__':
 
         config.add_route('place_order', '/{user}/order')
         config.add_view(place_order, route_name='place_order', request_method="POST", renderer='json')
+
+        config.add_route('cancel_order', '/{user}/order/{order}')
+        config.add_view(cancel_order, route_name='cancel_order', request_method="DELETE", renderer='json')
 
         app = config.make_wsgi_app()
     port = int(os.environ.get("PORT", "6543"))
