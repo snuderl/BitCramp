@@ -19,12 +19,12 @@ interaction with matching engine is single threaded and that all operations are 
 3. HTTP Api layer for interacting with trading exchange.
 
 
-Api calls:
+###Api calls:
 - GET - `/book`
 
-  Returns the order book.
+Returns the order book.
   
-  ```
+```
     {
       "buys": [
         {
@@ -41,13 +41,13 @@ Api calls:
         },
       ]
     }
-  ```
+```
 
 - GET - `/<user_id>`
 
-  Returns user wallet information and open orders.
+Returns user wallet information and open orders.
   
-  ```
+```
     {
       "user": 1,
       "fiat": 56.0,
@@ -69,26 +69,27 @@ Api calls:
         }
       ]
     }
-  ```
+```
 
 - POST - `/<user_id>/order`
   Creates a market order.
   
   Post data:
   
-  ```
+```
     {
       "side": BUY|SELL,
       "quantity": FLOAT,
       "price": FLOAT
     }
-  ```
+```
   
-  Response:
+Response:
   
-  ```
+```
     {"order_id": ID|NULL(when order is immediately filled)
-  ```
+```
 
 - DELETE - `/<user_id>/order/<order_id>`
+
   Cancels the order with the given id.
