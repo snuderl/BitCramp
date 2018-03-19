@@ -4,9 +4,10 @@
 
 ## Instructions
 To run the project do.
+```
 docker-compose build
 docker-compose up
-
+```
 This should start the exchange on localhost:80.
 
 ## Design
@@ -20,9 +21,11 @@ interaction with matching engine is single threaded and that all operations are 
 
 Api calls:
 - GET - `/book`
+
   Returns the order book.
-  """
-    {
+  
+  ```
+    {
       "buys": [
         {
           "side": "BUY",
@@ -38,11 +41,14 @@ Api calls:
         },
       ]
     }
-  """
+  ```
+
 - GET - `/<user_id>`
+
   Returns user wallet information and open orders.
-  """
-    {
+  
+  ```
+    {
       "user": 1,
       "fiat": 56.0,
       "btc": 2.5,
@@ -63,17 +69,26 @@ Api calls:
         }
       ]
     }
-  """
+  ```
 
 - POST - `/<user_id>/order`
   Creates a market order.
-  """
-    {
+  
+  Post data:
+  
+  ```
+    {
       "side": BUY|SELL,
       "quantity": FLOAT,
       "price": FLOAT
     }
-  """
+  ```
+  
+  Response:
+  
+  ```
+    {"order_id": ID|NULL(when order is immediately filled)
+  ```
 
 - DELETE - `/<user_id>/order/<order_id>`
   Cancels the order with the given id.
