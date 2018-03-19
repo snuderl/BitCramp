@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Enum, ForeignKey, Float, create_engine
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
+import sqlalchemy.exc
 from contextlib import contextmanager
 import matching_engine
 
@@ -23,7 +24,13 @@ def with_session(Session):
 
 def get_db(url_string):
     engine = create_engine(url_string)
-    Base.metadata.create_all(engine)
+    try:
+        Base.metadata.create_all(engine)
+    except sqlalchemy.exc.OperationalError:
+        # W8 for db to come up
+        import time
+        time.sleep(10)
+        Base.metadata.create_all(engine)
     return engine
 
 
@@ -32,9 +39,9 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True)
     side = Column(Enum(matching_engine.Side))
-    quantity = Column(Integer)
-    price = Column(Integer)
-    filled = Column(Integer)
+    quantity = Column(Float)
+    price = Column(Float)
+    filled = Column(Float)
     user_id = Column(Integer, ForeignKey("users.id"))
 
     user = relationship("User", back_populates="orders")
