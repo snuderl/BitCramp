@@ -19,7 +19,8 @@ interaction with matching engine is single threaded and that all operations are 
 3. HTTP Api layer for interacting with trading exchange.
 
 
-###Api calls:
+### Api calls:
+
 - GET - `/book`
 
 Returns the order book.
@@ -72,9 +73,10 @@ Returns user wallet information and open orders.
 ```
 
 - POST - `/<user_id>/order`
-  Creates a market order.
+
+Creates a limit order.
   
-  Post data:
+Post data:
   
 ```
     {
@@ -92,4 +94,4 @@ Response:
 
 - DELETE - `/<user_id>/order/<order_id>`
 
-  Cancels the order with the given id.
+Cancels the order with the given id.
